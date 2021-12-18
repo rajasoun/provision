@@ -1,0 +1,3 @@
+log4j-app   ansible_connection=local
+jndi-app   ansible_connection=local
+
