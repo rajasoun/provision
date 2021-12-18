@@ -23,17 +23,11 @@ case $choice in
       echo "Bring Up VM"
       check_precondition
       create_vm "$2"
-      echo "Adding Host Enteries...  "
-      add_host_entries
-      verify_certificates
-      display_app_status
       ;;
     down)
       echo "Destroy VM"
       delete_vm "$2"
       echo "Removing Host Enteries & Log files...  "
-      remove_host_entries
-      rm -fr logs/*.log
       ;;
     status)
       multipass ls

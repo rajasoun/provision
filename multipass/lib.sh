@@ -6,11 +6,11 @@ hostsFile="/etc/hosts"
 # Default IP address for host
 ip="127.0.0.1"
 
-yell() { echo "$0: $*" >&2; }
-die() { yell "$*"; exit 111; }
-try() { "$@" || die "cannot $*"; }
+function yell() { echo "$0: $*" >&2; }
+function die() { yell "$*"; exit 111; }
+function try() { "$@" || die "cannot $*"; }
 
-remove() {
+function remove() {
     hostname=$1
     if [ -n "$(grep  "[[:space:]]$hostname" /etc/hosts)" ]; then
         echo "$hostname found in $hostsFile. Removing now...";
@@ -20,7 +20,7 @@ remove() {
     fi
 }
 
-add() {
+function add() {
     hostname=$1
     if [ -n "$(grep  "[[:space:]]$hostname" /etc/hosts)" ]; then
         yell "$hostname, already exists: $(grep $hostname $hostsFile)";
@@ -98,10 +98,8 @@ function check_precondition(){
 
 function create_vm(){
     local PLAYBOOK="provision/docker.yml"
-    echo "$PWD"
-    echo $PLAYBOOK
     VM_NAME=$1
-    multipass launch --name $VM_NAME --cpus 2 --mem 2G --disk 5G --cloud-init provision/cloud-init.yaml
+    multipass launch --name $VM_NAME --cpus 2 --mem 2G --disk 5G --cloud-init cloud-init.yaml
     multipass exec $VM_NAME -- sudo apt-get install ansible -y 
     multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker
     multipass exec $VM_NAME -- git clone https://github.com/rajasoun/log4j-app
