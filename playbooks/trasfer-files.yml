@@ -5,7 +5,7 @@
   become_method: sudo
 
   vars:
-      LOCAL_CONFIG: '../log4j-app/certs'
+      LOCAL_CONFIG: 'log4j-app/certs'
       USER_HOME: '/home/ubuntu'
 
   pre_tasks:

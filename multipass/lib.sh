@@ -139,7 +139,6 @@ function configure_vm(){
     local PLAYBOOK_HOME="vm-provisioner/playbooks"
     VM_NAME=$1
     export VM_NAME
-    multipass exec $VM_NAME -- cd vm-provisioner && git pull --rebase && cd ..
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/docker.yml
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
