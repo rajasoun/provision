@@ -1,6 +1,6 @@
 ---
 - name: SSL Certificates Management
-  hosts: vms
+  hosts: localhost
   become: true
   become_method: sudo
 

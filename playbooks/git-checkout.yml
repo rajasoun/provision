@@ -1,5 +1,5 @@
 ---
-- hosts: '{{ VM_NAME }}'
+- hosts: localhost
 
   vars:
     git_repos:
