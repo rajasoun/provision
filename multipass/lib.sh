@@ -150,7 +150,8 @@ function create_vm(){
     multipass exec $VM_NAME -- sudo apt-get install ansible -y 
     multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker
     multipass exec $VM_NAME -- git clone https://github.com/rajasoun/vm-provisioner
-    # multipass mount ${HOME}/workspace/zero-day-exploits  ${VM_NAME}:${VM_HOME}/zero-day-exploits
+    multipass mount ${HOME}/workspace/zero-day-exploits/log4j-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/log4j-app
+    multipass mount ${HOME}/workspace/zero-day-exploits/jndi-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/jndi-app
 }
 
 function delete_vm(){
