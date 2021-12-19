@@ -34,9 +34,9 @@ case $choice in
       ;;
     configure)
       PLAYBOOK_HOME="playbooks"
-      ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
-      ansible-playbook ${PLAYBOOK_HOME}/docker.yml
-      ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
+      ansible-playbook -i inventory ${PLAYBOOK_HOME}/git-checkout.yml
+      ansible-playbook -i inventory ${PLAYBOOK_HOME}/docker.yml
+      ansible-playbook -i inventory ${PLAYBOOK_HOME}/trasfer-files.yml
       ;;
     status)
       multipass ls
