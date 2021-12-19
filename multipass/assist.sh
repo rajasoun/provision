@@ -28,7 +28,6 @@ case $choice in
       create_vm "$VM_NAME"
       mount_apps "$VM_NAME"
       configure_vm "$VM_NAME"
-      umount_apps "$VM_NAME"
       end=$(date +%s)
       runtime=$((end-start))
       echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
