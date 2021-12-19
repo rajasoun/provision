@@ -33,7 +33,7 @@ case $choice in
       delete_vm "$VM_NAME"
       ;;
     configure)
-      local PLAYBOOK_HOME="vm-provisioner/playbooks"
+      PLAYBOOK_HOME="vm-provisioner/playbooks"
       ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
       ansible-playbook ${PLAYBOOK_HOME}/docker.yml
       ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
