@@ -139,13 +139,15 @@ function configure_vm(){
     local PLAYBOOK_HOME="vm-provisioner/playbooks"
     VM_NAME=$1
     export VM_NAME
-    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
+    multipass exec $VM_NAME -- sudo apt-get install ansible -y 
+    multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker --force
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/docker.yml
 }
 
 function mount_apps(){
     local VM_HOME="/home/ubuntu"
     VM_NAME=$1
+    multipass mount ${HOME}/workspace/zero-day-exploits/vm-provisioner  ${VM_NAME}:${VM_HOME}/zero-day-exploits/vm-provisioner
     multipass mount ${HOME}/workspace/zero-day-exploits/log4j-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/log4j-app
     multipass mount ${HOME}/workspace/zero-day-exploits/jndi-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/jndi-app
 }
@@ -154,9 +156,6 @@ function create_vm(){
     # local VM_HOME="/home/ubuntu"
     VM_NAME=$1
     multipass launch --name $VM_NAME --cpus 2 --mem 4G --disk 5G --cloud-init cloud-init.yaml
-    multipass exec $VM_NAME -- sudo apt-get install ansible -y 
-    multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker
-    multipass exec $VM_NAME -- git clone https://github.com/rajasoun/vm-provisioner
 }
 
 function delete_vm(){

@@ -25,6 +25,7 @@ case $choice in
       [ -z $VM_NAME ] && help
       echo -e "Bring Up VM -> $VM_NAME"
       create_vm "$VM_NAME"
+      mount_apps "$VM_NAME"
       configure_vm "$VM_NAME"
       ;;
     down)
