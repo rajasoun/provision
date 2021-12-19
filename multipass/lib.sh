@@ -136,16 +136,17 @@ function _docker() {
 }
 
 function create_vm(){
-    local PLAYBOOK="provision/docker.yml"
+    local PLAYBOOK="vm-provisioner/docker.yml"
+    local VM_HOME="/home/ubuntu"
     VM_NAME=$1
-    multipass launch --name $VM_NAME --cpus 2 --mem 2G --disk 5G --cloud-init cloud-init.yaml
+    multipass launch --name $VM_NAME --cpus 2 --mem 4G --disk 5G --cloud-init cloud-init.yaml
     multipass exec $VM_NAME -- sudo apt-get install ansible -y 
     multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker
     # multipass exec $VM_NAME -- git clone https://github.com/rajasoun/log4j-app
     # multipass exec $VM_NAME -- git clone https://github.com/rajasoun/jndi-app
-    multipass exec $VM_NAME -- git clone https://github.com/rajasoun/provision
+    multipass exec $VM_NAME -- git clone https://github.com/rajasoun/vm-provisioner
+    # multipass mount ${HOME}/workspace/zero-day-exploits  ${VM_NAME}:${VM_HOME}/zero-day-exploits
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK} 
-    multipass mount ${HOME}/workspace/zero-day-exploits  ${VM_NAME}:${VM_HOME}/zero-day-exploits
 }
 
 function delete_vm(){

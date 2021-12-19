@@ -1,0 +1,3 @@
+config/ssl-certs/*.crt
+config/ssl-certs/*.csr
+config/ssl-certs/*.key
