@@ -135,8 +135,16 @@ function _docker() {
   return 0
 }
 
-function create_vm(){
+function configure_vm(){
     local PLAYBOOK_HOME="vm-provisioner/playbooks"
+    VM_NAME=$1
+    multipass exec $VM_NAME -- cd vm-provisioner && git pull --rebase && cd ..
+    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
+    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/docker.yml
+    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
+}
+
+function create_vm(){
     # local VM_HOME="/home/ubuntu"
     VM_NAME=$1
     multipass launch --name $VM_NAME --cpus 2 --mem 4G --disk 5G --cloud-init cloud-init.yaml
@@ -144,9 +152,6 @@ function create_vm(){
     multipass exec $VM_NAME -- ansible-galaxy install geerlingguy.docker
     multipass exec $VM_NAME -- git clone https://github.com/rajasoun/vm-provisioner
     # multipass mount ${HOME}/workspace/zero-day-exploits  ${VM_NAME}:${VM_HOME}/zero-day-exploits
-    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
-    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/docker.yml
-    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
 }
 
 function delete_vm(){

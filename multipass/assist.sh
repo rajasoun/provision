@@ -25,6 +25,7 @@ case $choice in
       [ -z $VM_NAME ] && help
       echo -e "Bring Up VM -> $VM_NAME"
       create_vm "$VM_NAME"
+      configure_vm "$VM_NAME"
       ;;
     down)
       echo "Destroy VM"
@@ -33,10 +34,10 @@ case $choice in
       delete_vm "$VM_NAME"
       ;;
     configure)
-      PLAYBOOK_HOME="playbooks"
-      ansible-playbook -i inventory ${PLAYBOOK_HOME}/git-checkout.yml
-      ansible-playbook -i inventory ${PLAYBOOK_HOME}/docker.yml
-      ansible-playbook -i inventory ${PLAYBOOK_HOME}/trasfer-files.yml
+      echo "Configure VM"
+      [ -z $VM_NAME ] && help
+      echo -e "Configure VM -> $VM_NAME"
+      configure_vm "$VM_NAME"
       ;;
     status)
       multipass ls
