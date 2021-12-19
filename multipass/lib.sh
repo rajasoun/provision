@@ -141,7 +141,6 @@ function configure_vm(){
     export VM_NAME
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
     multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/docker.yml
-    multipass exec $VM_NAME -- ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
 }
 
 function create_vm(){
