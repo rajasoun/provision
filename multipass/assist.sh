@@ -21,6 +21,7 @@ VM_NAME="$2"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     up)
+      start=$(date +%s)
       check_precondition
       [ -z $VM_NAME ] && help
       echo -e "Bring Up VM -> $VM_NAME"
@@ -28,6 +29,9 @@ case $choice in
       mount_apps "$VM_NAME"
       configure_vm "$VM_NAME"
       umount_apps "$VM_NAME"
+      end=$(date +%s)
+      runtime=$((end-start))
+      echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
       ;;
     down)
       echo "Destroy VM"
