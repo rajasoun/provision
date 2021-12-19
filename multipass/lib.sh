@@ -147,9 +147,9 @@ function configure_vm(){
 function mount_apps(){
     local VM_HOME="/home/ubuntu"
     VM_NAME=$1
-    multipass mount ${HOME}/workspace/zero-day-exploits/vm-provisioner  ${VM_NAME}:${VM_HOME}/zero-day-exploits/vm-provisioner
-    multipass mount ${HOME}/workspace/zero-day-exploits/log4j-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/log4j-app
-    multipass mount ${HOME}/workspace/zero-day-exploits/jndi-app  ${VM_NAME}:${VM_HOME}/zero-day-exploits/jndi-app
+    multipass mount ${HOME}/workspace/zero-day-exploits/vm-provisioner  ${VM_NAME}:${VM_HOME}/vm-provisioner
+    multipass mount ${HOME}/workspace/zero-day-exploits/log4j-app  ${VM_NAME}:${VM_HOME}/log4j-app
+    multipass mount ${HOME}/workspace/zero-day-exploits/jndi-app  ${VM_NAME}:${VM_HOME}/jndi-app
 }
 
 function create_vm(){
