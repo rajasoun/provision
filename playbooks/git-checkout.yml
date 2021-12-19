@@ -1,5 +1,5 @@
 ---
-- hosts: vms
+- hosts: '{{ VM_NAME }}'
 
   vars:
     git_repos:
