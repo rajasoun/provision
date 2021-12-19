@@ -37,6 +37,7 @@ case $choice in
       ansible-playbook ${PLAYBOOK_HOME}/git-checkout.yml
       ansible-playbook ${PLAYBOOK_HOME}/docker.yml
       ansible-playbook ${PLAYBOOK_HOME}/trasfer-files.yml
+      ;;
     status)
       multipass ls
       ;;
