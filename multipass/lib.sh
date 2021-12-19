@@ -152,6 +152,14 @@ function mount_apps(){
     multipass mount ${HOME}/workspace/zero-day-exploits/jndi-app  ${VM_NAME}:${VM_HOME}/jndi-app
 }
 
+function umount_apps(){
+    local VM_HOME="/home/ubuntu"
+    VM_NAME=$1
+    multipass exec $VM_NAME -- sudo umount ${VM_HOME}/vm-provisioner
+    multipass exec $VM_NAME -- sudo umount ${VM_HOME}/log4j-app
+    multipass exec $VM_NAME -- sudo umount ${VM_HOME}/jndi-app
+}
+
 function create_vm(){
     # local VM_HOME="/home/ubuntu"
     VM_NAME=$1

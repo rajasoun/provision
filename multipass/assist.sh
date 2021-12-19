@@ -46,6 +46,12 @@ case $choice in
       echo -e "Mounting Folders to -> $VM_NAME"
       mount_apps "$VM_NAME"
       ;;
+    umount)
+      echo "Un Mounting Host Folders from  VM"
+      [ -z $VM_NAME ] && help
+      echo -e "UnMounting Folders From -> $VM_NAME"
+      umount_apps "$VM_NAME"
+      ;;
     status)
       multipass ls
       ;;
