@@ -180,6 +180,11 @@ function create_vm(){
     multipass launch --name $VM_NAME --cpus 2 --mem 4G --disk 5G --cloud-init cloud-init.yaml
 }
 
+function shell_to_vm(){
+    VM_NAME=$1
+    multipass shell $VM_NAME
+}
+
 function delete_vm(){
     VM_NAME=$1
     multipass stop ${VM_NAME} 

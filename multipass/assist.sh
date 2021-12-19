@@ -33,6 +33,12 @@ case $choice in
       runtime=$((end-start))
       echo -e "${GREEN}${BOLD}VM Provision Done! | Duration:  $(display_time $runtime)${NC}"
       ;;
+    shell)
+      echo "Shell to VM"
+      [ -z $VM_NAME ] && help
+      echo -e "Shell to VM -> $VM_NAME"
+      shell_to_vm "$VM_NAME"
+      ;;
     down)
       echo "Destroy VM"
       [ -z $VM_NAME ] && help
