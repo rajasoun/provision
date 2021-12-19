@@ -27,6 +27,7 @@ case $choice in
       create_vm "$VM_NAME"
       mount_apps "$VM_NAME"
       configure_vm "$VM_NAME"
+      umount_apps "$VM_NAME"
       ;;
     down)
       echo "Destroy VM"
