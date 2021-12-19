@@ -1,0 +1,17 @@
+---
+- hosts: vms
+
+  vars:
+    git_repos:
+      - name: 'poc-app'
+        url: 'https://github.com/rajasoun/log4j-app'
+      - name: 'jndi-app'
+        url: 'https://github.com/rajasoun/jndi-app'
+
+  tasks:
+      - name: Git checkout
+        ansible.builtin.git:
+            repo: '{{ item.url}}'
+            dest: '{{ item.name }}'
+            update: yes
+        with_items: '{{ git_repos }}'
