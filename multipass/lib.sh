@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+NC=$'\e[0m' # No Color
+BOLD=$'\033[1m'
+UNDERLINE=$'\033[4m'
+RED=$'\e[31m'
+GREEN=$'\e[32m'
+BLUE=$'\e[34m'
+ORANGE=$'\x1B[33m'
+
 # Path to your hosts file
 hostsFile="/etc/hosts"
 
@@ -94,6 +102,37 @@ function check_precondition(){
         echo 'Goto https://multipass.run/'
         exit 1
     fi
+}
+
+# raise error
+function raise_error(){
+  echo -e "${BOLD}${RED}${1}${NC}" >&2
+  exit 1
+}
+
+# workaround for path limitations in windows
+function _docker() {
+  export MSYS_NO_PATHCONV=1
+  export MSYS2_ARG_CONV_EXCL='*'
+
+  case "$OSTYPE" in
+      *msys*|*cygwin*) os="$(uname -o)" ;;
+      *) os="$(uname)";;
+  esac
+
+  if [[ "$os" == "Msys" ]] || [[ "$os" == "Cygwin" ]]; then
+      # shellcheck disable=SC2230
+      realdocker="$(which -a docker | grep -v "$(readlink -f "$0")" | head -1)"
+      printf "%s\0" "$@" > /tmp/args.txt
+      # --tty or -t requires winpty
+      if grep -ZE '^--tty|^-[^-].*t|^-t.*' /tmp/args.txt; then
+          #exec winpty /bin/bash -c "xargs -0a /tmp/args.txt '$realdocker'"
+          winpty /bin/bash -c "xargs -0a /tmp/args.txt '$realdocker'"
+          return 0
+      fi
+  fi
+  docker "$@"
+  return 0
 }
 
 function create_vm(){

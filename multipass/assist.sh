@@ -9,25 +9,28 @@ source "$BASE_DIR/lib.sh"
 function help(){
     echo "Usage: $0  {up|down|status}" >&2
     echo
-    echo "   up          ->   Provision, Configure, Validate Application Stack"
-    echo "   down        ->   Destroy Application Stack"
-    echo "   status      ->   Displays Status of Application Stack"
+    echo "   up   <vm>  ->   Provision, Configure, Validate Application Stack"
+    echo "   down <vm>  ->   Destroy Application Stack"
+    echo "   status     ->   Displays Status of Application Stack"
     echo
     return 1
 }
 
 opt="$1"
+VM_NAME="$2"
 choice=$( tr '[:upper:]' '[:lower:]' <<<"$opt" )
 case $choice in
     up)
-      echo "Bring Up VM"
       check_precondition
-      create_vm "$2"
+      [ -z $VM_NAME ] && help
+      echo -e "Bring Up VM -> $VM_NAME"
+      create_vm "$VM_NAME"
       ;;
     down)
       echo "Destroy VM"
-      delete_vm "$2"
-      echo "Removing Host Enteries & Log files...  "
+      [ -z $VM_NAME ] && help
+      echo -e "Deleting VM -> $VM_NAME"
+      delete_vm "$VM_NAME"
       ;;
     status)
       multipass ls
