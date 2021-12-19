@@ -39,6 +39,12 @@ case $choice in
       echo -e "Configure VM -> $VM_NAME"
       configure_vm "$VM_NAME"
       ;;
+    mount)
+      echo "Mounting Host Folders to  VM"
+      [ -z $VM_NAME ] && help
+      echo -e "Mounting Folders to -> $VM_NAME"
+      mount_apps "$VM_NAME"
+      ;;
     status)
       multipass ls
       ;;
